@@ -57,7 +57,7 @@ const menuRef = useRef(null);
         {/* Drag handle (small area only) */}
         <span
           {...listeners}
-          className="cursor-grab text-gray-400 text-sm p-5 hover:bg-gray-100"
+          className="cursor-grab text-gray-500 text-sm p-5 rounded hover:bg-gray-100"
         >
           ⋮⋮ drag
         </span>
@@ -65,7 +65,9 @@ const menuRef = useRef(null);
         {/* 3 DOT MENU */}
         <div className="relative" ref={menuRef}>
           <button
+          
             onClick={(e) => {
+              
               e.stopPropagation();
               setShowMenu(prev => !prev)
             }}

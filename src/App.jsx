@@ -43,7 +43,7 @@ function App() {
 
         <div className="flex gap-3">
 
-          <Button variant='secondary' onClick={() => setShowHistory(true)}>
+          <Button variant='secondary' onClick={() => setShowHistory(pre=>!pre)}>
             History
           </Button>
           <Button

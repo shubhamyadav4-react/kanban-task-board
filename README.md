@@ -3,12 +3,15 @@
 A modern task management app with drag-and-drop, undo/redo, and local persistence.
 
 ## Features
+- real-time update on each 12 sec timer
 - Drag & Drop (dnd-kit)
+- History Tab
 - Create / Edit / Delete tasks
 - Undo / Redo (state history)
 - LocalStorage persistence
 - Toast notifications
 - Responsive UI (Tailwind CSS)
+
 
 ## Tech Stack
 - React + Vite

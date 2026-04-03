@@ -62,7 +62,7 @@ const Board = ({ setEditTask }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             simulateExternalUpdate();
-        }, 9000); // every 9 sec
+        }, 10000); // every 10 sec
 
         return () => clearInterval(interval);
     }, [tasks]);
@@ -95,7 +95,7 @@ const Board = ({ setEditTask }) => {
         // toast(`Task "${randomTask.title}" updated by ${randomTask.assignee}`)
         toast(
             <div className="max-w-[320px]">
-                <p className={`text-center ${getPriorityStyle(randomTask.priority)}`}>
+                <p className={`text-center rounded ${getPriorityStyle(randomTask.priority)}`}>
                     {randomTask.priority.toUpperCase()}
                 </p>
                 <p className='text-center bold'>Task Updated by</p>
