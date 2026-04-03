@@ -24,7 +24,7 @@ const getProgress = () => {
   return (
     <div
       ref={setNodeRef}
-      className={`flex-none w-[370px] h-[600px] bg-white rounded-xl shadow-sm p-4 border border-dashed ${getBorderColor()} overflow-y-auto`}
+      className={`flex-none w-[370px] h-[600px] bg-white rounded-xl shadow-sm p-4 border border-dashed ${getBorderColor()} overflow-y-auto overflow-x-hidden`}
     >
       {/* 🔥 HEADER */}
       <div className="mb-4">
