@@ -68,17 +68,17 @@ const Board = ({ setEditTask }) => {
     }, [tasks]);
 
     const getPriorityStyle = (priority) => {
-    switch (priority) {
-      case 'low':
-        return 'bg-yellow-100 text-yellow-700';
-      case 'medium':
-        return 'bg-violet-100 text-violet-700';
-      case 'high':
-        return 'bg-red-100 text-red-700';
-      default:
-        return 'bg-gray-100 text-gray-600';
-    }
-  };
+        switch (priority) {
+            case 'low':
+                return 'bg-yellow-100 text-yellow-700';
+            case 'medium':
+                return 'bg-violet-100 text-violet-700';
+            case 'high':
+                return 'bg-red-100 text-red-700';
+            default:
+                return 'bg-gray-100 text-gray-600';
+        }
+    };
 
     const simulateExternalUpdate = () => {
         if (tasks.length === 0) return;
@@ -91,16 +91,25 @@ const Board = ({ setEditTask }) => {
         if (randomTask.status === newStatus) return;
 
         updateTask(randomTask.id, { status: newStatus });
-      toast(
-  <div className="max-w-[320px]">
-    <p className={`text-center ${getPriorityStyle(randomTask.priority)}`}>
-      {randomTask.priority.toUpperCase()}
-    </p>
-    <p className="text-sm text-gray-600 line-clamp-3">
-      "{randomTask.title}" updated by {randomTask.assignee}
-    </p>
-  </div>
-);
+
+        // toast(`Task "${randomTask.title}" updated by ${randomTask.assignee}`)
+        toast(
+            <div className="max-w-[320px]">
+                <p className={`text-center ${getPriorityStyle(randomTask.priority)}`}>
+                    {randomTask.priority.toUpperCase()}
+                </p>
+                <p className='text-center bold'>Task Updated by</p>
+                <p className="text-center text-sm text-gray-600 line-clamp-3">
+                    {randomTask.assignee}
+                </p>
+
+                <p className="text-center text-sm text-gray-600 line-clamp-3">
+                    "{randomTask.title}"
+                </p>
+
+
+            </div>
+        );
         // toast.success(<div>{`${randomTask.priority} level Task "${randomTask.title}" updated by ${randomTask.assignee}`}</div>)
 
     };
@@ -150,7 +159,6 @@ const Board = ({ setEditTask }) => {
             <FilterBar filters={filters} setFilters={setFilters} />
 
 
-
             {/* <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
 
                 <div style={{ display: 'flex', gap: '20px' }}>
@@ -175,6 +183,8 @@ const Board = ({ setEditTask }) => {
                     <Column setEditTask={setEditTask} id="in-progress" title="In Progress" tasks={getTasks('in-progress')} />
 
                     <Column setEditTask={setEditTask} id="done" title="Done" tasks={getTasks('done')} />
+
+                    
 
                 </div>
 

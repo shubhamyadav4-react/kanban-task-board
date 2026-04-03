@@ -11,44 +11,80 @@ export const useTaskStore = create(
       tasks: mockTasks,
       past: [],
       future: [],
+      history: [], // ✅ NEW
+
+      // 🧠 ADD HISTORY HELPER
+      addHistory: (entry) => {
+        const { history } = get();
+        set({
+          history: [entry, ...history],
+        });
+      },
 
       // 👉 helper (history + persist safe)
-      setTasksWithHistory: (newTasks) => {
-        const { tasks, past } = get();
+      setTasksWithHistory: (newTasks, actionMessage = "Tasks updated") => {
+        const { tasks, past, addHistory } = get();
 
+        // ✅ save undo history
         set({
           past: [...past, tasks],
           tasks: newTasks,
           future: [],
+        });
+
+        // ✅ add activity log
+        addHistory({
+          id: Date.now(),
+          message: actionMessage,
+          timestamp: new Date().toISOString(),
         });
       },
 
       // ➕ ADD
       addTask: (task) => {
         const { tasks, setTasksWithHistory } = get();
-        setTasksWithHistory([...tasks, task]);
+
+        setTasksWithHistory(
+          [...tasks, task],
+          `🟢 Task "${task.title}" created`
+        );
       },
 
       // ✏️ UPDATE
       updateTask: (id, updates) => {
         const { tasks, setTasksWithHistory } = get();
 
+        const task = tasks.find(t => t.id === id);
+
         const updated = tasks.map((t) =>
           t.id === id ? { ...t, ...updates } : t
         );
 
-        setTasksWithHistory(updated);
+        let message = ` Task "${task?.title}" updated`;
+
+        // 🔥 detect status change (drag)
+        if (updates.status && updates.status !== task?.status) {
+          message = `🔁 Task "${task?.title}" moved to ${updates.status}`;
+        }
+
+        setTasksWithHistory(updated, message);
       },
 
       // 🗑 DELETE
       deleteTask: (id) => {
         const { tasks, setTasksWithHistory } = get();
-        setTasksWithHistory(tasks.filter((t) => t.id !== id));
+
+        const task = tasks.find(t => t.id === id);
+
+        setTasksWithHistory(
+          tasks.filter((t) => t.id !== id),
+          `❌ Task "${task?.title}" deleted`
+        );
       },
 
       // 🔙 UNDO
       undo: () => {
-        const { past, tasks, future } = get();
+        const { past, tasks, future, addHistory } = get();
 
         if (past.length === 0) {
           toast("Nothing to undo ⚠️");
@@ -62,11 +98,17 @@ export const useTaskStore = create(
           past: past.slice(0, -1),
           future: [tasks, ...future],
         });
+
+        addHistory({
+          id: Date.now(),
+          message: "↩️ Undo action performed",
+          timestamp: new Date().toISOString(),
+        });
       },
 
       // 🔜 REDO
       redo: () => {
-        const { future, tasks, past } = get();
+        const { future, tasks, past, addHistory } = get();
 
         if (future.length === 0) {
           toast("Nothing to redo ⚠️");
@@ -80,12 +122,18 @@ export const useTaskStore = create(
           future: future.slice(1),
           past: [...past, tasks],
         });
+
+        addHistory({
+          id: Date.now(),
+          message: "↪️ Redo action performed",
+          timestamp: new Date().toISOString(),
+        });
       },
 
     }),
 
     {
-      name: 'task-storage', // 🔥 key in localStorage
+      name: 'task-storage', // 🔥 localStorage key
     }
   )
 );
