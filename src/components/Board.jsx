@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 
 
 
-const Board = ({setEditTask }) => {
+const Board = ({ setEditTask }) => {
 
     const tasks = useTaskStore((state) => state.tasks);
 
@@ -62,7 +62,7 @@ const Board = ({setEditTask }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             simulateExternalUpdate();
-        }, 12000); // every 12 sec
+        }, 11000); // every 11 sec
 
         return () => clearInterval(interval);
     }, [tasks]);
@@ -78,8 +78,7 @@ const Board = ({setEditTask }) => {
         if (randomTask.status === newStatus) return;
 
         updateTask(randomTask.id, { status: newStatus });
-
-        toast.success(`Task "${randomTask.title}" updated by another user`)
+        toast.success(`${randomTask.priority} level Task "${randomTask.title}" updated by ${randomTask.assignee}`)
 
     };
 
@@ -90,8 +89,7 @@ const Board = ({setEditTask }) => {
 
         const matchAssignee =
 
-            !filters.assignee || task.assignee === filters.assignee;
-
+            !filters.assignee || task.assignee.includes(filters.assignee);
 
 
         const matchPriority =
@@ -147,7 +145,7 @@ const Board = ({setEditTask }) => {
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
             >
-               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' >
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' >
 
                     <Column setEditTask={setEditTask} id="todo" title="Todo" tasks={getTasks('todo')} />
 

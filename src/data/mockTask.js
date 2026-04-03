@@ -30,8 +30,8 @@ export const mockTasks = [
     id: '4',
     title: 'Remaining feature',
     description: 'Remaining feature',
-    status: 'done',
-    priority: 'high',
+    status: 'todo',
+    priority: 'low',
     assignee: 'John Doe',
     createdAt: '2024-11-21T09:15:00Z'
   }

@@ -3,13 +3,14 @@ import Board from './components/Board';
 import TaskModal from './components/TaskModal';
 import { Toaster } from 'react-hot-toast';
 import { useTaskStore } from './store/taskStore';
+import Button from './components/Button/Button';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [editTask, setEditTask] = useState(null); // ✅ FIX
 
   const undo = useTaskStore((s) => s.undo);
-const redo = useTaskStore((s) => s.redo);
+  const redo = useTaskStore((s) => s.redo);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -17,7 +18,7 @@ const redo = useTaskStore((s) => s.redo);
       {/* Toast */}
       <Toaster
         position="top-center"
-        
+
         toastOptions={{
           duration: 4000,
           style: {
@@ -28,35 +29,34 @@ const redo = useTaskStore((s) => s.redo);
       />
 
       {/* Header */}
-      
-    <div className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-  <h1 className="text-2xl font-semibold text-gray-800">
-    Task Board
-  </h1>
 
-  <div className="flex gap-3">
-    <button
-      onClick={undo}
-      className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-    >
-      Undo
-    </button>
+      <div className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+        <h1 className="text-3xl font-semibold text-gray-900">
+          Task Board
+        </h1>
 
-    <button
-      onClick={redo}
-      className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-    >
-      Redo
-    </button>
+        <div className="flex gap-3">
+          <Button
+            onClick={undo}
+            variant='secondary'
+          >
+            Undo
+          </Button>
 
-    <button
-      onClick={() => setShowModal(true)}
-      className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 active:scale-95 transition"
-    >
-      + Add Task
-    </button>
-  </div>
-</div>
+          <Button
+            onClick={redo}
+            variant='secondary'
+          >
+            Redo
+          </Button>
+
+          <Button
+            onClick={() => setShowModal(true)}
+            variant='primary'>
+            + Add Task
+          </Button>
+        </div>
+      </div>
 
       {/* Content */}
       <div className="p-6 flex justify-center">

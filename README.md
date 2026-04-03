@@ -17,6 +17,7 @@ A modern task management app with drag-and-drop, undo/redo, and local persistenc
 - react-hot-toast
 
 ##  Setup
+
 ```bash
 npm install
 npm run dev

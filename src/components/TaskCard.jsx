@@ -1,7 +1,6 @@
 import { useDraggable } from '@dnd-kit/core';
-import { useState } from 'react';
 import { useTaskStore } from '../store/taskStore';
-
+import { useEffect, useRef, useState } from 'react';
 const TaskCard = ({ task, onEdit }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task.id,
@@ -9,12 +8,28 @@ const TaskCard = ({ task, onEdit }) => {
 
   const deleteTask = useTaskStore((state) => state.deleteTask);
   const [showMenu, setShowMenu] = useState(false);
+const menuRef = useRef(null);
 
   const style = {
     transform: transform
       ? `translate(${transform.x}px, ${transform.y}px)`
       : undefined,
   };
+
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setShowMenu(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, []);
+
 
   const getPriorityStyle = () => {
     switch (task.priority) {
@@ -42,19 +57,19 @@ const TaskCard = ({ task, onEdit }) => {
         {/* Drag handle (small area only) */}
         <span
           {...listeners}
-          className="cursor-grab text-gray-400 text-sm"
+          className="cursor-grab text-gray-400 text-sm p-5 hover:bg-gray-100"
         >
-          ⋮⋮
+          ⋮⋮ drag
         </span>
 
         {/* 3 DOT MENU */}
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
           <button
             onClick={(e) => {
               e.stopPropagation();
-              setShowMenu(!showMenu);
+              setShowMenu(prev => !prev)
             }}
-            className="text-gray-500 hover:text-black"
+            className="text-gray-500 hover:text-black p-2 rounded hover:bg-gray-100 cursor-pointer"
           >
             ⋮
           </button>
@@ -93,13 +108,13 @@ const TaskCard = ({ task, onEdit }) => {
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-gray-600 text-center mb-3">
+      <p className="text-sm text-gray-600 truncate w-40 mb-8">
         {task.description}
       </p>
 
       {/* Footer */}
       <div className="flex justify-between items-center text-xs">
-        <span className="text-gray-500">👤 {task.assignee}</span>
+        <span className="text-gray-500 truncate w-40">👤 {task.assignee}</span>
 
         <span className={`px-2 py-1 rounded-full ${getPriorityStyle()}`}>
           {task.priority}

@@ -41,8 +41,8 @@ const onSubmit = (data) => {
 };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-xl shadow-xl w-[350px] space-y-4">
+    <div   onClick={onClose} className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div onClick={(e) => e.stopPropagation()} className="bg-white p-6 rounded-xl shadow-xl w-[350px] space-y-4">
         
         <h2 className="text-lg font-semibold text-gray-800">
           {editData ? 'Edit Task' : 'Create Task'}

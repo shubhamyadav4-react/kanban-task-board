@@ -9,7 +9,7 @@ const FilterBar = ({ filters, setFilters }) => {
             {/* Search */}
 
             <input
-  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 
                 placeholder="Search..."
 
@@ -29,7 +29,7 @@ const FilterBar = ({ filters, setFilters }) => {
 
             <input
 
-  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 
 
                 placeholder="Assignee"
@@ -49,7 +49,7 @@ const FilterBar = ({ filters, setFilters }) => {
             {/* Priority */}
 
             <select
-className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={filters.priority}
 
                 onChange={(e) =>
