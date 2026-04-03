@@ -18,14 +18,17 @@ function App() {
       {/* Toast */}
       <Toaster
         position="top-center"
-
-        toastOptions={{
-          duration: 4000,
-          style: {
-            borderRadius: '8px',
-            padding: '10px',
-          },
-        }}
+toastOptions={{
+    duration: 4000,
+    style: {
+      maxWidth: '480px',   //  increase width
+      padding: '14px 18px', //  more spacing
+      fontSize: '14px',     // better readability
+      borderRadius: '10px',
+      // borderRadius: '8px',
+      //       padding: '10px',
+    
+    }}}
       />
 
       {/* Header */}

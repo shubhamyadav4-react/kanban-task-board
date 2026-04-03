@@ -62,10 +62,23 @@ const Board = ({ setEditTask }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             simulateExternalUpdate();
-        }, 11000); // every 11 sec
+        }, 9000); // every 9 sec
 
         return () => clearInterval(interval);
     }, [tasks]);
+
+    const getPriorityStyle = (priority) => {
+    switch (priority) {
+      case 'low':
+        return 'bg-yellow-100 text-yellow-700';
+      case 'medium':
+        return 'bg-violet-100 text-violet-700';
+      case 'high':
+        return 'bg-red-100 text-red-700';
+      default:
+        return 'bg-gray-100 text-gray-600';
+    }
+  };
 
     const simulateExternalUpdate = () => {
         if (tasks.length === 0) return;
@@ -78,7 +91,17 @@ const Board = ({ setEditTask }) => {
         if (randomTask.status === newStatus) return;
 
         updateTask(randomTask.id, { status: newStatus });
-        toast.success(`${randomTask.priority} level Task "${randomTask.title}" updated by ${randomTask.assignee}`)
+      toast(
+  <div className="max-w-[320px]">
+    <p className={`text-center ${getPriorityStyle(randomTask.priority)}`}>
+      {randomTask.priority.toUpperCase()}
+    </p>
+    <p className="text-sm text-gray-600 line-clamp-3">
+      "{randomTask.title}" updated by {randomTask.assignee}
+    </p>
+  </div>
+);
+        // toast.success(<div>{`${randomTask.priority} level Task "${randomTask.title}" updated by ${randomTask.assignee}`}</div>)
 
     };
 
@@ -89,7 +112,7 @@ const Board = ({ setEditTask }) => {
 
         const matchAssignee =
 
-            !filters.assignee || task.assignee.includes(filters.assignee);
+            !filters.assignee || task.assignee.toLowerCase().includes(filters.assignee.toLowerCase());
 
 
         const matchPriority =

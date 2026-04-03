@@ -103,18 +103,18 @@ const menuRef = useRef(null);
       </div>
 
       {/* Title */}
-      <h3 className="text-center font-semibold text-gray-800 mb-2">
+      <h3 className="text-center font-semibold truncate w-75 text-gray-800 mb-2">
         {task.title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-gray-600 truncate w-40 mb-8">
+      <p className="text-sm text-gray-600 truncate w-90 mb-8">
         {task.description}
       </p>
 
       {/* Footer */}
       <div className="flex justify-between items-center text-xs">
-        <span className="text-gray-500 truncate w-40">👤 {task.assignee}</span>
+        <span className="text-gray-500 truncate w-80">👤 {task.assignee}</span>
 
         <span className={`px-2 py-1 rounded-full ${getPriorityStyle()}`}>
           {task.priority}
